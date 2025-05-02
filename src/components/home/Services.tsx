@@ -1,5 +1,5 @@
 
-import { CheckCircle, Music, Headphones, Star, Video, Image } from "lucide-react";
+import { CheckCircle, Music, Headphones, Star, Video, Image, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({ title, description, icon: Icon, features, highlight = false, price = null }) => {
@@ -79,8 +79,6 @@ const Services = () => {
       ],
     },
   ];
-
-  const { ArrowRight } = require("lucide-react");
 
   return (
     <section className="section bg-gradient-to-b from-gray-100 to-white" id="services">
