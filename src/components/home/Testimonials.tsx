@@ -1,34 +1,34 @@
 
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, Star, Music } from "lucide-react";
 
 const testimonials = [
   {
     id: 1,
     content:
-      "Un travail exceptionnel! Notre site e-commerce a connu une augmentation significative des conversions depuis sa refonte. Communication claire et résultats au-delà de nos attentes.",
+      "La chanson d'anniversaire créée pour ma fille était parfaite ! Elle a été émue aux larmes, et toute la famille a adoré cette attention personnalisée. Un souvenir qui restera gravé à vie.",
     author: "Marie Dubois",
-    position: "Directrice Marketing, ModeShop",
+    position: "Chanson d'anniversaire",
     rating: 5,
     image: "https://randomuser.me/api/portraits/women/44.jpg",
   },
   {
     id: 2,
     content:
-      "Collaboration très professionnelle. Le développement de notre application a été réalisé dans les délais et avec une qualité impressionnante. Je recommande vivement!",
-    author: "Thomas Martin",
-    position: "CEO, TechStart",
+      "MINDCRAFTER a composé la musique pour notre mariage avec une sensibilité incroyable. Nos invités nous demandent encore qui a créé cette magnifique chanson. Un talent rare !",
+    author: "Thomas et Sophie Martin",
+    position: "Musique de cérémonie",
     rating: 5,
     image: "https://randomuser.me/api/portraits/men/46.jpg",
   },
   {
     id: 3,
     content:
-      "Un vrai expert dans son domaine. La refonte de notre identité visuelle et de notre site web a transformé notre image de marque. Un grand merci pour ce travail minutieux.",
-    author: "Sophie Lambert",
-    position: "Fondatrice, Eco Solutions",
+      "Grâce à la formule Brand Boost, notre marque a développé une véritable identité sonore. Les vidéos ont généré un engagement 3 fois supérieur à nos contenus habituels !",
+    author: "Alexandre Lambert",
+    position: "Fondateur, Eco Solutions",
     rating: 5,
-    image: "https://randomuser.me/api/portraits/women/65.jpg",
+    image: "https://randomuser.me/api/portraits/men/65.jpg",
   },
 ];
 
@@ -48,24 +48,34 @@ const Testimonials = () => {
   };
 
   return (
-    <section className="section bg-freelance-dark text-white" id="testimonials">
+    <section className="section bg-gradient-to-br from-freelance-dark to-black text-white" id="testimonials">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 animate-slide-up">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ce que disent mes clients</h2>
+          <span className="text-freelance-primary font-medium">Témoignages</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ce que disent nos clients</h2>
           <p className="text-lg text-gray-300">
-            Découvrez les témoignages de clients satisfaits avec qui j'ai eu le plaisir de collaborer.
+            Découvrez les expériences partagées par ceux qui ont fait confiance à nos créations.
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="relative bg-freelance-secondary/30 p-8 md:p-12 rounded-xl">
+          <div className="relative bg-freelance-dark/50 p-8 md:p-12 rounded-xl border border-freelance-primary/20 backdrop-blur-sm">
+            <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4">
+              <div className="text-freelance-primary opacity-10">
+                <Music size={120} />
+              </div>
+            </div>
+            
             <div key={testimonials[currentIndex].id} className="animate-fade-in">
-              <div className="flex items-center mb-8">
-                <img
-                  src={testimonials[currentIndex].image}
-                  alt={testimonials[currentIndex].author}
-                  className="w-16 h-16 rounded-full object-cover mr-4"
-                />
+              <div className="flex flex-col md:flex-row md:items-center mb-8 gap-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-freelance-primary blur-md rounded-full opacity-30"></div>
+                  <img
+                    src={testimonials[currentIndex].image}
+                    alt={testimonials[currentIndex].author}
+                    className="w-20 h-20 rounded-full object-cover relative z-10 border-2 border-freelance-primary"
+                  />
+                </div>
                 <div>
                   <h4 className="font-semibold text-lg">{testimonials[currentIndex].author}</h4>
                   <p className="text-freelance-accent">{testimonials[currentIndex].position}</p>
