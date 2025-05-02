@@ -3,13 +3,11 @@ import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/contact/ContactForm";
-import QuoteForm from "@/components/contact/QuoteForm";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Contact = () => {
-  const [showQuoteForm, setShowQuoteForm] = useState(false);
-
   return (
     <>
       <Navbar />
@@ -25,11 +23,11 @@ const Contact = () => {
 
             <div className="mt-8">
               <Button 
-                onClick={() => setShowQuoteForm(!showQuoteForm)}
+                asChild
                 size="lg"
                 className="bg-freelance-accent hover:bg-freelance-accent/90 text-white"
               >
-                {showQuoteForm ? "Revenir au formulaire de contact" : "Demander un devis personnalisé"}
+                <Link to="/demande-devis">Demander un devis personnalisé</Link>
               </Button>
             </div>
           </div>
@@ -91,16 +89,10 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Contact Form or Quote Form */}
+              {/* Contact Form */}
               <div className="bg-white p-8 rounded-xl shadow-lg">
-                {showQuoteForm ? (
-                  <QuoteForm />
-                ) : (
-                  <>
-                    <h2 className="text-2xl font-bold mb-6">Envoyez-moi un message</h2>
-                    <ContactForm />
-                  </>
-                )}
+                <h2 className="text-2xl font-bold mb-6">Envoyez-moi un message</h2>
+                <ContactForm />
               </div>
             </div>
           </div>
