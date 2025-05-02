@@ -1,10 +1,15 @@
 
+import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/contact/ContactForm";
+import QuoteForm from "@/components/contact/QuoteForm";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Contact = () => {
+  const [showQuoteForm, setShowQuoteForm] = useState(false);
+
   return (
     <>
       <Navbar />
@@ -17,6 +22,16 @@ const Contact = () => {
               Vous avez un projet en tête ? N'hésitez pas à me contacter pour en discuter.
               Je vous répondrai dans les plus brefs délais.
             </p>
+
+            <div className="mt-8">
+              <Button 
+                onClick={() => setShowQuoteForm(!showQuoteForm)}
+                size="lg"
+                className="bg-freelance-accent hover:bg-freelance-accent/90 text-white"
+              >
+                {showQuoteForm ? "Revenir au formulaire de contact" : "Demander un devis personnalisé"}
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -39,7 +54,7 @@ const Contact = () => {
                     </div>
                     <div className="ml-4">
                       <h3 className="font-semibold">Email</h3>
-                      <p className="text-gray-600">contact@freelance.pro</p>
+                      <p className="text-gray-600">contact@mindcrafter.fr</p>
                     </div>
                   </div>
 
@@ -76,10 +91,16 @@ const Contact = () => {
                 </div>
               </div>
 
-              {/* Contact Form */}
+              {/* Contact Form or Quote Form */}
               <div className="bg-white p-8 rounded-xl shadow-lg">
-                <h2 className="text-2xl font-bold mb-6">Envoyez-moi un message</h2>
-                <ContactForm />
+                {showQuoteForm ? (
+                  <QuoteForm />
+                ) : (
+                  <>
+                    <h2 className="text-2xl font-bold mb-6">Envoyez-moi un message</h2>
+                    <ContactForm />
+                  </>
+                )}
               </div>
             </div>
           </div>
