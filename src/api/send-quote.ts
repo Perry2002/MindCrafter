@@ -31,7 +31,7 @@ export async function sendQuoteEmail(formData: {
       from: 'Demande de Devis <onboarding@resend.dev>', // Utilisez votre domaine vérifié dans Resend
       to: ['contact@mindcrafter.fr'], // L'adresse email de destination
       subject: `Nouvelle demande de devis: ${eventType}`,
-      reply_to: contact.includes('@') ? contact : undefined,
+      replyTo: contact.includes('@') ? contact : undefined,
       text: `
         Nom: ${fullName}
         Contact: ${contact}

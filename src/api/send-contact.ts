@@ -16,7 +16,7 @@ export async function sendContactEmail(formData: {
       from: 'Contact Form <onboarding@resend.dev>', // Utilisez votre domaine vérifié dans Resend
       to: ['contact@mindcrafter.fr'], // L'adresse email de destination
       subject: `Nouveau message de contact: ${subject}`,
-      reply_to: email,
+      replyTo: email,
       text: `
         Nom: ${name}
         Email: ${email}
