@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import emailjs from "@emailjs/browser";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -23,20 +24,46 @@ const ContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulation d'envoi d'un message
-    setTimeout(() => {
+    try {
+      // Préparation des données pour EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      };
+
+      // Envoi de l'email via EmailJS
+      await emailjs.send(
+        "service_mind_crafter", // ID du service EmailJS (à remplacer par le vôtre)
+        "template_contact", // ID du template EmailJS (à remplacer par le vôtre)
+        templateParams,
+        "YOUR_PUBLIC_KEY" // Clé publique EmailJS (à remplacer par la vôtre)
+      );
+
+      // Notification de succès
       toast({
         title: "Message envoyé !",
         description: "Merci pour votre message. Je vous répondrai dans les plus brefs délais.",
       });
+      
+      // Réinitialisation du formulaire
       setFormData({
         name: "",
         email: "",
         subject: "",
         message: "",
       });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de l'email:", error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer ultérieurement.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -115,7 +142,7 @@ const ContactForm = () => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`btn-primary w-full md:w-auto ${
+          className={`bg-freelance-primary text-white px-6 py-3 rounded-md hover:bg-freelance-primary/90 transition-colors w-full md:w-auto ${
             isSubmitting
               ? "opacity-70 cursor-not-allowed"
               : ""

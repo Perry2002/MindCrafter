@@ -34,7 +34,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Section */}
-        <section className="section bg-gray-50">
+        <section className="section bg-gray-50 py-16">
           <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Contact Information */}
@@ -95,14 +95,6 @@ const Contact = () => {
                 <ContactForm />
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Map Section */}
-        <section className="h-96 w-full bg-gray-300 mt-16">
-          {/* Placeholder pour une carte Google Maps */}
-          <div className="w-full h-full flex items-center justify-center bg-freelance-light text-freelance-primary">
-            <p className="text-lg font-medium">Carte Google Maps</p>
           </div>
         </section>
       </main>
