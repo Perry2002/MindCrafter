@@ -13,6 +13,17 @@ export async function handleFetchRequest(request: Request) {
       const result = await sendContactEmail(formData);
       
       if (result.success) {
+        // Message spécial pour le mode développement
+        if (result.dev) {
+          return new Response(JSON.stringify({ 
+            success: true, 
+            message: "Simulation d'envoi d'email en mode développement" 
+          }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        
         return new Response(JSON.stringify({ success: true }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' }
@@ -38,6 +49,17 @@ export async function handleFetchRequest(request: Request) {
       const result = await sendQuoteEmail(formData);
       
       if (result.success) {
+        // Message spécial pour le mode développement
+        if (result.dev) {
+          return new Response(JSON.stringify({ 
+            success: true, 
+            message: "Simulation de demande de devis en mode développement" 
+          }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+        
         return new Response(JSON.stringify({ success: true }), {
           status: 200,
           headers: { 'Content-Type': 'application/json' }

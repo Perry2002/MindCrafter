@@ -1,7 +1,9 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+// Utilisation d'une clé API factice si aucune n'est fournie
+const API_KEY = import.meta.env.VITE_RESEND_API_KEY || 'dummy_key_for_development';
+const resend = new Resend(API_KEY);
 
 export async function sendQuoteEmail(formData: {
   fullName: string;
@@ -15,6 +17,17 @@ export async function sendQuoteEmail(formData: {
   additionalInfo?: string;
 }) {
   try {
+    // Vérifier si nous sommes en mode développement avec une clé factice
+    if (API_KEY === 'dummy_key_for_development') {
+      console.log('Mode développement : Demande de devis simulée avec les données suivantes :', formData);
+      // Simuler un envoi réussi pour le développement
+      return { 
+        success: true, 
+        data: { id: 'dev-mode-quote-id' },
+        dev: true 
+      };
+    }
+
     const {
       fullName,
       contact,
@@ -28,8 +41,8 @@ export async function sendQuoteEmail(formData: {
     } = formData;
 
     const data = await resend.emails.send({
-      from: 'Demande de Devis <onboarding@resend.dev>', // Utilisez votre domaine vérifié dans Resend
-      to: ['contact@mindcrafter.fr'], // L'adresse email de destination
+      from: 'Demande de Devis <onboarding@resend.dev>',
+      to: ['contact@mindcrafter.fr'],
       subject: `Nouvelle demande de devis: ${eventType}`,
       replyTo: contact.includes('@') ? contact : undefined,
       text: `

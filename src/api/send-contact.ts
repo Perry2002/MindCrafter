@@ -1,7 +1,9 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+// Utilisation d'une clé API factice si aucune n'est fournie
+const API_KEY = import.meta.env.VITE_RESEND_API_KEY || 'dummy_key_for_development';
+const resend = new Resend(API_KEY);
 
 export async function sendContactEmail(formData: {
   name: string;
@@ -10,11 +12,22 @@ export async function sendContactEmail(formData: {
   message: string;
 }) {
   try {
+    // Vérifier si nous sommes en mode développement avec une clé factice
+    if (API_KEY === 'dummy_key_for_development') {
+      console.log('Mode développement : Email simulé avec les données suivantes :', formData);
+      // Simuler un envoi réussi pour le développement
+      return { 
+        success: true, 
+        data: { id: 'dev-mode-email-id' },
+        dev: true 
+      };
+    }
+
     const { name, email, subject, message } = formData;
 
     const data = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>', // Utilisez votre domaine vérifié dans Resend
-      to: ['contact@mindcrafter.fr'], // L'adresse email de destination
+      from: 'Contact Form <onboarding@resend.dev>',
+      to: ['contact@mindcrafter.fr'],
       subject: `Nouveau message de contact: ${subject}`,
       replyTo: email,
       text: `

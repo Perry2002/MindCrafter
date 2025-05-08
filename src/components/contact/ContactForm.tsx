@@ -38,6 +38,8 @@ const ContactForm = () => {
         }),
       });
 
+      const result = await response.json();
+      
       if (!response.ok) {
         throw new Error('Une erreur est survenue lors de l\'envoi du message');
       }
@@ -45,7 +47,7 @@ const ContactForm = () => {
       // Notification de succès
       toast({
         title: "Message envoyé !",
-        description: "Merci pour votre message. Je vous répondrai dans les plus brefs délais.",
+        description: result.message || "Merci pour votre message. Je vous répondrai dans les plus brefs délais.",
       });
       
       // Réinitialisation du formulaire
