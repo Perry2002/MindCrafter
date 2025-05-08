@@ -1,8 +1,8 @@
 
 import { Resend } from 'resend';
 
-// Utilisation d'une clé API factice si aucune n'est fournie
-const API_KEY = import.meta.env.VITE_RESEND_API_KEY || 'dummy_key_for_development';
+// Utilisation de la clé API Resend fournie ou une clé factice pour le développement
+const API_KEY = import.meta.env.VITE_RESEND_API_KEY || 're_3xbkUAcx_NwPhLrJ9YecUnqUsGecmFW8N';
 const resend = new Resend(API_KEY);
 
 export async function sendQuoteEmail(formData: {
