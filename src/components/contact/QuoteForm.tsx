@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -5,7 +6,6 @@ import * as z from "zod";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon, User, Mail, Music, Clock, Package, FileText, Check } from "lucide-react";
-import emailjs from "@emailjs/browser";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -94,52 +94,57 @@ export default function QuoteForm() {
     },
   });
 
-  function onSubmit(data: FormValues) {
+  async function onSubmit(data: FormValues) {
     setIsSubmitting(true);
     
-    // Conversion des données pour EmailJS
-    const templateParams = {
-      from_name: data.fullName,
-      from_email: data.contact,
-      delivery_date: format(data.deliveryDate, "dd/MM/yyyy", { locale: fr }),
-      event_type: eventTypes.find(type => type.value === data.eventType)?.label || data.eventType,
-      message_to_include: data.includeMessage,
-      music_styles: data.musicStyles.map(style => {
-        const styleObj = musicStyles.find(s => s.id === style);
-        return styleObj ? styleObj.label : style;
-      }).join(", "),
-      urgency_level: data.urgencyLevel === "standard" 
-        ? "Standard (livraison sous 24h)" 
-        : "Urgente (moins de 24h +30%)",
-      delivery_method: data.deliveryMethod,
-      additional_info: data.additionalInfo || "Aucune information supplémentaire",
-    };
-    
-    // Envoi de l'email via EmailJS
-    emailjs.send(
-      "service_mind_crafter", // ID du service EmailJS (à remplacer par le vôtre)
-      "template_devis", // ID du template EmailJS (à remplacer par le vôtre)
-      templateParams,
-      "YOUR_PUBLIC_KEY" // Clé publique EmailJS (à remplacer par la vôtre)
-    )
-    .then(() => {
+    try {
+      // Préparation des données pour l'API Resend
+      const requestData = {
+        fullName: data.fullName,
+        contact: data.contact,
+        deliveryDate: format(data.deliveryDate, "dd/MM/yyyy", { locale: fr }),
+        eventType: eventTypes.find(type => type.value === data.eventType)?.label || data.eventType,
+        includeMessage: data.includeMessage,
+        musicStyles: data.musicStyles.map(style => {
+          const styleObj = musicStyles.find(s => s.id === style);
+          return styleObj ? styleObj.label : style;
+        }).join(", "),
+        urgencyLevel: data.urgencyLevel === "standard" 
+          ? "Standard (livraison sous 24h)" 
+          : "Urgente (moins de 24h +30%)",
+        deliveryMethod: data.deliveryMethod,
+        additionalInfo: data.additionalInfo || "Aucune information supplémentaire",
+      };
+      
+      // Envoi de la demande avec Resend API
+      const response = await fetch('/api/send-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Une erreur est survenue lors de l\'envoi de la demande');
+      }
+      
       toast({
         title: "Demande envoyée !",
         description: "Nous avons bien reçu votre demande de devis. Nous vous répondrons dans les plus brefs délais.",
       });
+      
       form.reset();
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Erreur lors de l'envoi de l'email:", error);
       toast({
         title: "Erreur",
         description: "Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer ultérieurement.",
         variant: "destructive",
       });
-    })
-    .finally(() => {
+    } finally {
       setIsSubmitting(false);
-    });
+    }
   }
 
   return (

@@ -3,7 +3,7 @@ import { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ContactForm from "@/components/contact/ContactForm";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -63,17 +63,6 @@ const Contact = () => {
                     <div className="ml-4">
                       <h3 className="font-semibold">Téléphone</h3>
                       <p className="text-gray-600">+33 6 12 34 56 78</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start">
-                    <div className="bg-freelance-light p-3 rounded-full text-freelance-primary">
-                      <MapPin size={24} />
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="font-semibold">Localisation</h3>
-                      <p className="text-gray-600">Paris, France</p>
-                      <p className="text-gray-600">Disponible pour les projets à distance</p>
                     </div>
                   </div>
 

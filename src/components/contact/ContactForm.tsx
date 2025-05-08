@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import emailjs from "@emailjs/browser";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -25,21 +24,23 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Préparation des données pour EmailJS
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      };
+      // Préparation des données pour Resend API
+      const response = await fetch('/api/send-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message
+        }),
+      });
 
-      // Envoi de l'email via EmailJS
-      await emailjs.send(
-        "service_mind_crafter", // ID du service EmailJS (à remplacer par le vôtre)
-        "template_contact", // ID du template EmailJS (à remplacer par le vôtre)
-        templateParams,
-        "YOUR_PUBLIC_KEY" // Clé publique EmailJS (à remplacer par la vôtre)
-      );
+      if (!response.ok) {
+        throw new Error('Une erreur est survenue lors de l\'envoi du message');
+      }
 
       // Notification de succès
       toast({
