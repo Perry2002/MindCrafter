@@ -42,7 +42,7 @@ export async function sendQuoteEmail(formData: {
 
     const data = await resend.emails.send({
       from: 'Demande de Devis <onboarding@resend.dev>',
-      to: ['contact@mindcrafter.fr'],
+      to: ['perrydoyigbe197@gmail.com'],
       subject: `Nouvelle demande de devis: ${eventType}`,
       replyTo: contact.includes('@') ? contact : undefined,
       text: `
